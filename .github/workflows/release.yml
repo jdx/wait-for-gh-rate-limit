@@ -40,6 +40,7 @@ jobs:
             os: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - run: rustup target add $CARGO_BUILD_TARGET
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: rust

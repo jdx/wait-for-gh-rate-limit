@@ -30,6 +30,7 @@ jobs:
       CARGO_BUILD_TARGET: ${{ matrix.target }}
     steps:
       - uses: actions/checkout@v4
+      - run: rustup target add $CARGO_BUILD_TARGET
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: rust
