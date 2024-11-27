@@ -35,5 +35,5 @@ jobs:
           target: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
         with:
-          shared-key: rust
+          shared-key: rust-${{ matrix.target }}
       - run: cargo build

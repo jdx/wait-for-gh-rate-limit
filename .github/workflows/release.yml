@@ -40,9 +40,13 @@ jobs:
             os: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install cross-compilation tools
+        uses: taiki-e/setup-cross-toolchain-action@v1
+        with:
+          target: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
         with:
-          shared-key: rust
+          shared-key: rust-${{ matrix.target }}
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
           bin: wait-for-gh-rate-limit
