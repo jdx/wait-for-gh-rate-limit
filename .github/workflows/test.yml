@@ -30,7 +30,9 @@ jobs:
       CARGO_BUILD_TARGET: ${{ matrix.target }}
     steps:
       - uses: actions/checkout@v4
-      - run: rustup target add ${{ matrix.target }}
+      - uses: taiki-e/setup-cross-toolchain-action@v1
+        with:
+          target: ${{ matrix.target }}
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: rust
