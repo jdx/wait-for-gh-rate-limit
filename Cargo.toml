@@ -2,6 +2,8 @@
 name = "wait-for-gh-rate-limit"
 version = "0.1.0"
 edition = "2021"
+authors = ["Jeff Dickey (@jdx)"]
+description = "CLI that waits for GitHub rate limit to reset if you're out of requests"
 
 [dependencies]
 chrono = "0.4.38"

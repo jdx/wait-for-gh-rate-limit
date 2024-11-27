@@ -1,6 +1,6 @@
 use std::env;
 use std::time::Duration;
-use reqwest::header::{AUTHORIZATION, USER_AGENT};
+use reqwest::header::USER_AGENT;
 use tokio::time::sleep;
 
 #[tokio::main]
