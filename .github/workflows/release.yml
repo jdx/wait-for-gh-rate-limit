@@ -37,6 +37,9 @@ jobs:
             os: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: rust
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
           bin: wait-for-gh-rate-limit
