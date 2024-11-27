@@ -1,0 +1,11 @@
+[package]
+name = "wait-for-gh-rate-limit"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.38"
+humantime = "2.1.0"
+reqwest = {version = "0.12", features = ["json"]}
+serde = { version = "1.0.215", features = ["derive"] }
+tokio = {version = "1", features = ["full"]}
