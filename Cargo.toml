@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Jeff Dickey (@jdx)"]
 description = "CLI that waits for GitHub rate limit to reset if you're out of requests"
+documentation = "https://github.com/jdx/wait-for-gh-rate-limit"
+repository = "https://github.com/jdx/wait-for-gh-rate-limit"
+homepage = "https://github.com/jdx/wait-for-gh-rate-limit"
 license = "MIT"
 
 [dependencies]
