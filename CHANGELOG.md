@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.5] - 2024-11-27
+
+### ⚙️ Miscellaneous Tasks
+
+- Release wait-for-gh-rate-limit version 0.1.5
+
 ## [0.1.4] - 2024-11-27
 
 ### ⚙️ Miscellaneous Tasks
