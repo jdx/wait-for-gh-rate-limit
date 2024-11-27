@@ -22,6 +22,7 @@ jobs:
     needs: create-release
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           - target: aarch64-apple-darwin
