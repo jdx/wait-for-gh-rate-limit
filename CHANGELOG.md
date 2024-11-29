@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.8] - 2024-11-29
+
+### 🚀 Features
+
+- Show full timestamp instead of epoch
+
+### ⚙️ Miscellaneous Tasks
+
+- Cargo up
+
+## [0.1.7] - 2024-11-27
+
+### ⚙️ Miscellaneous Tasks
+
+- Release wait-for-gh-rate-limit version 0.1.7
+
 ## [0.1.6] - 2024-11-27
 
 ### ⚙️ Miscellaneous Tasks
