@@ -1,7 +1,7 @@
 [package]
 name = "wait-for-gh-rate-limit"
 version = "0.1.8"
-edition = "2021"
+edition = "2024"
 authors = ["Jeff Dickey (@jdx)"]
 description = "CLI that waits for GitHub rate limit to reset if you're out of requests"
 documentation = "https://github.com/jdx/wait-for-gh-rate-limit"
@@ -10,10 +10,10 @@ homepage = "https://github.com/jdx/wait-for-gh-rate-limit"
 license = "MIT"
 
 [dependencies]
-chrono = "0.4.38"
-humantime = "2.1.0"
+chrono = "0.4"
+humantime = "2"
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
-serde = { version = "1.0.215", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
 
 [package.metadata.release]
