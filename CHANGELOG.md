@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2025-04-23
+
+### 📚 Documentation
+
+- Fix name in README
+
 ## [0.1.8] - 2024-11-29
 
 ### 🚀 Features
@@ -11,6 +17,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Cargo up
+- Release wait-for-gh-rate-limit version 0.1.8
 
 ## [0.1.7] - 2024-11-27
 
