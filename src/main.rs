@@ -1,10 +1,12 @@
 use reqwest::header::USER_AGENT;
+use std::collections::HashMap;
 use std::env;
+use std::error::Error;
 use std::time::Duration;
 use tokio::time::sleep;
 
 #[tokio::main]
-async fn main() -> Result<(), reqwest::Error> {
+async fn main() -> Result<(), Box<dyn Error>> {
     let mut req = reqwest::Client::new().get("https://api.github.com/rate_limit");
     let token = env::var("GITHUB_TOKEN")
         .or(env::var("GITHUB_API_TOKEN"))
@@ -16,26 +18,30 @@ async fn main() -> Result<(), reqwest::Error> {
     }
     let resp = req.send().await?;
     resp.error_for_status_ref()?;
-    let rate_limit = resp.json::<RateLimitResponse>().await?.rate;
+
+    let resource = env::args().skip(1).find(|arg| !arg.starts_with('-')).unwrap_or(String::from("core"));
+    let resources = resp.json::<RateLimitResponse>().await?.resources;
+    let rate_limit = resources.get(&resource).ok_or_else(|| format!("GitHub rate limit resource '{resource}' not found"))?;
+
     let reset_time = chrono::DateTime::from_timestamp(rate_limit.reset as i64, 0)
         .unwrap()
         .naive_local();
     let duration = Duration::from_secs(rate_limit.reset - chrono::Utc::now().timestamp() as u64);
     let rel_time = humantime::format_duration(duration);
     if rate_limit.remaining == 0 {
-        eprintln!("Rate limit exceeded, sleeping for {rel_time} until {reset_time}",);
+        eprintln!("GitHub {resource} rate limit exceeded, sleeping for {rel_time} until {reset_time}");
         sleep(duration).await;
     } else if env::args().all(|arg| arg != "--quiet" && arg != "-q") {
         let remaining = rate_limit.remaining;
         let limit = rate_limit.limit;
-        println!("GitHub rate limit: {remaining}/{limit} - resets at {reset_time} (~{rel_time})");
+        println!("GitHub {resource} rate limit: {remaining}/{limit} - resets at {reset_time} (~{rel_time})");
     }
     Ok(())
 }
 
 #[derive(Debug, serde::Deserialize)]
 struct RateLimitResponse {
-    rate: RateLimit,
+    resources: HashMap<String, RateLimit>
 }
 
 #[derive(Debug, serde::Deserialize)]
