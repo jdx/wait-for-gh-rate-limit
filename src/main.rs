@@ -28,7 +28,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .naive_local();
     let duration = Duration::from_secs(rate_limit.reset - chrono::Utc::now().timestamp() as u64);
     let rel_time = humantime::format_duration(duration);
-    if rate_limit.remaining == 0 {
+    // There are no docs on it as of 2026-01-07,
+    // but a request when remaining==1 would already be rejected due to exceeding the limit, at least for code_search,
+    // even though one would expect that to happen only at remaining==0.
+    if rate_limit.remaining <= 1 {
         eprintln!("GitHub {resource} rate limit exceeded, sleeping for {rel_time} until {reset_time}");
         sleep(duration).await;
     } else if env::args().all(|arg| arg != "--quiet" && arg != "-q") {
