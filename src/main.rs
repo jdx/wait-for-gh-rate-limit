@@ -26,7 +26,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let reset_time = chrono::DateTime::from_timestamp(rate_limit.reset as i64, 0)
         .unwrap()
         .naive_local();
-    let duration = Duration::from_secs(rate_limit.reset - chrono::Utc::now().timestamp() as u64);
+    let duration = Duration::from_secs(
+        rate_limit.reset - chrono::Utc::now().timestamp() as u64
+        /* requests on the reset second might still hit the previous limit */ + 1,
+    );
     let rel_time = humantime::format_duration(duration);
     // There are no docs on it as of 2026-01-07,
     // but a request when remaining==1 would already be rejected due to exceeding the limit, at least for code_search,
