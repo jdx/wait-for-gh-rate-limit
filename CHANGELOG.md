@@ -1,8 +1,18 @@
+## [1.1.1] - 2026-01-07
+
+### 🐛 Bug Fixes
+
+- Treat remaining==1 as exceeded (#6)
+- Sleep an extra second past reset time (#5)
 ## [1.1.0] - 2026-01-06
 
 ### 🚀 Features
 
 - Support querying per resource limits (#4)
+
+### ⚙️ Miscellaneous Tasks
+
+- Release wait-for-gh-rate-limit version 1.1.0
 ## [1.0.0] - 2025-04-23
 
 ### 📚 Documentation
