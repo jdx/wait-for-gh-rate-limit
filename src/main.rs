@@ -12,7 +12,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .or(env::var("GITHUB_API_TOKEN"))
         .ok();
     req = req.header(USER_AGENT, env!("CARGO_PKG_NAME"));
-    req = req.header("x-github-api-version", "2022-11-28");
+    req = req.header("x-github-api-version", "2026-03-10");
     if let Some(token) = token {
         req = req.bearer_auth(token);
     }
