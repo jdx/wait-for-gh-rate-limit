@@ -1,9 +1,24 @@
+## [1.1.2] - 2026-07-06
+
+### 🐛 Bug Fixes
+
+- Register release-plz mise task (#10)
+
+### ⚙️ Miscellaneous Tasks
+
+- Set dev profile debug to 1 (#7)
+- Bump GitHub API to 2026-03-10 (#8)
+- Add release automation (#9)
 ## [1.1.1] - 2026-01-07
 
 ### 🐛 Bug Fixes
 
 - Treat remaining==1 as exceeded (#6)
 - Sleep an extra second past reset time (#5)
+
+### ⚙️ Miscellaneous Tasks
+
+- Release wait-for-gh-rate-limit version 1.1.1
 ## [1.1.0] - 2026-01-06
 
 ### 🚀 Features
