@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DRY_RUN="${DRY_RUN:-0}"
+
+released_versions="$(git tag --list | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$' || true)"
+cur_version="$(cargo pkgid wait-for-gh-rate-limit | cut -d# -f2 | cut -d@ -f2)"
+
+if [ -z "$released_versions" ] || ! echo "$released_versions" | grep -q "^v$cur_version$"; then
+  echo "Releasing $cur_version"
+  if [ "$DRY_RUN" = 0 ]; then
+    git tag "v$cur_version"
+    git push --tags
+    cargo publish
+  fi
+  exit 0
+fi
+
+version="$(git cliff --bumped-version)"
+
+if [ "$DRY_RUN" != 0 ]; then
+  echo "version: $version"
+  echo "changelog: $(git cliff --bump --unreleased --strip all | tail -n +3)"
+  exit 0
+fi
+
+if [ "$version" = "v$cur_version" ]; then
+  echo "No unreleased changes detected for wait-for-gh-rate-limit; skipping release PR creation."
+  exit 0
+fi
+
+cargo set-version "${version#v}"
+cargo update
+git cliff --bump -o CHANGELOG.md
+
+pr_body="$(git cliff --bump --unreleased --strip all | tail -n +3)"
+
+git config user.name mise-en-dev
+git config user.email 123107610+mise-en-dev@users.noreply.github.com
+
+git add Cargo.* CHANGELOG.md
+git checkout -B release
+git commit -m "chore: release $version"
+git push origin release --force
+
+if ! gh pr create --title "chore: release $version" --body "$pr_body"; then
+  gh pr edit release --title "chore: release $version" --body "$pr_body"
+fi
