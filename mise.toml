@@ -1,0 +1,9 @@
+[tools]
+"cargo:cargo-edit" = "latest"
+git-cliff = "latest"
+
+[tasks.build]
+run = "cargo build"
+
+[tasks.test]
+run = "cargo test"
