@@ -1,0 +1,38 @@
+name: release-plz
+
+permissions: {}
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+      - release-plz
+
+concurrency:
+  group: release-plz
+
+env:
+  DRY_RUN: 0
+
+jobs:
+  release-plz:
+    if: github.repository == 'jdx/wait-for-gh-rate-limit'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_PLZ_TOKEN }}
+      - uses: jdx/mise-action@v4
+        with:
+          experimental: true
+          cache: false
+      - run: mise trust --all
+      - run: mise run release-plz
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
