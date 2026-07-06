@@ -7,3 +7,6 @@ run = "cargo build"
 
 [tasks.test]
 run = "cargo test"
+
+[tasks.release-plz]
+run = "bash mise-tasks/release-plz"
